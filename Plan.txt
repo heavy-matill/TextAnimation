@@ -1,0 +1,34 @@
+Library ähnlich RGBAnimator
+
+Protokoll mit JSON?
+
+Arbeit zusammen mit RGBAnimator
+    TextAnimator Objekt, mit link auf RGB Animator Objekt
+
+Arbeit standalone:
+    TextAnimator Objekt übernimmt Farbe von RGB, eigene Zeitangabe
+
+Optionen: 
+    Buchstaben abstand (wenn 0 wird Farbänderung benötigt, default inverse, kein Background)
+    Zentriert
+    Durchlaufend
+        Geschwindigkeit
+        Einlaufend
+    Wiederholend
+
+    Zeiten:
+        Anzeigedauer (ggf am Start)
+        Pause
+
+    Hintergrundfarbe:
+        Schwarz
+        Inverse
+        Letzte (aus RGBAnimator)
+
+    Farbe:
+        Aus RGBAnimator:
+            Auf Pixel, Buchstabe, Wort
+        Regenbogen
+            Auf Pixel, Buchstabe, Wort
+
+    Text

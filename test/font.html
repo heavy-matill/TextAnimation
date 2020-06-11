@@ -1,0 +1,56 @@
+<script>
+    function init() {
+        var table = document.getElementById("table");
+        var display = document.getElementById("display");
+        if (table != null) {
+            for (var i = 0; i < table.rows.length; i++) {
+                for (var j = 0; j < table.rows[i].cells.length; j++)
+                table.rows[i].cells[j].onclick = function () {
+                    tableText(this);
+                };
+            }
+        }
+    }
+
+    function tableText(tableCell) {
+        var uint16 = 0;
+        var checkedBoxes = document.querySelectorAll('input:checked');
+        checkedBoxes.forEach(function(checkBox,index) {
+            uint16 += (1 << Number(checkBox.id));
+        })
+        //alert(uint16)
+        display.value = "0x"+uint16.toString(16)
+        display.select()
+        document.execCommand("copy")
+    }
+</script>
+<body onload="init()">
+    <table id="table">
+        <tr>
+            <td><input type="checkbox" id="0"/></td>
+            <td><input type="checkbox" id="5"/></td>
+            <td><input type="checkbox" id="10"/></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" id="1"/></td>
+            <td><input type="checkbox" id="6"/></td>
+            <td><input type="checkbox" id="11"/></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" id="2"/></td>
+            <td><input type="checkbox" id="7"/></td>
+            <td><input type="checkbox" id="12"/></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" id="3"/></td>
+            <td><input type="checkbox" id="8"/></td>
+            <td><input type="checkbox" id="13"/></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" id="4"/></td>
+            <td><input type="checkbox" id="9"/></td>
+            <td><input type="checkbox" id="14"/></td>
+        </tr>
+    </table>
+    <input type="text" value="0x00" id="display">
+</body>
