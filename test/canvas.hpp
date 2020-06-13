@@ -8,8 +8,10 @@ int8_t xStart = 0;
 uint16_t iStart = 0;
 uint16_t iColor = 1;
 uint16_t iColorTemp = 1;
-bool bColorEachChar = false;
-bool bColorEachWord = true;
+uint16_t iColorBg = 0;
+uint16_t stColorScheme = 2; 
+bool bBgInv = true;
+bool bSpacesBg = false;
 
 void fillCanvas(char c) {
     for(uint8_t i = 0; i<15; i++) {
@@ -100,11 +102,14 @@ void drawText() {
     fillCanvas(colorASCII(0));
     iColorTemp = iColor;
     for (uint8_t i = iStart; i<text.length() && (i-iStart)*xWidth+xStart<15; i++) {
-        if (bColorEachChar) {
-            iColor = i%4+1;
-            // get Color from list or shift hue
-        } else {
-            if (bColorEachWord) {
+        switch (stColorScheme) {
+            case 1: 
+                // Color each character
+                // get Color from list or shift hue
+                iColor = i%4+1;
+                break;
+            case 2:
+                // Color each word
                 if (text[i] == ' ') { 
                     if ((i-iStart)*xWidth+xStart >= 0) {                                             
                         iColor = iColor%4+1;
@@ -113,9 +118,22 @@ void drawText() {
                         iColorTemp = iColor;
                     }
                 }
-            }
-        }                 
-        drawChar((i-iStart)*xWidth+xStart,text[i],iColor,0);
+                break;
+            case 3:
+                // Color from RBG Animator
+                // TBD
+                break;
+            default:
+                // Color warmwhite
+                iColor = 1;
+        }
+        // select background color
+        if (bBgInv && bSpacesBg || text[i] != ' ') {
+            iColorBg = (iColor-1+2)%4+2;
+        } else {
+            iColorBg = 0;
+        } 
+        drawChar((i-iStart)*xWidth+xStart,text[i],iColor,iColorBg);
     }
     iColor = iColorTemp;
 }

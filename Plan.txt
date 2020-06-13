@@ -21,14 +21,14 @@ Optionen:
         Pause
 
     Hintergrundfarbe:
-        Schwarz
-        Inverse
+        +Schwarz
+        +Inverse
         Letzte (aus RGBAnimator)
 
     Farbe:
         Aus RGBAnimator:
             Auf Pixel, Buchstabe, Wort
-        Regenbogen
-            Auf Pixel, Buchstabe, Wort
+        +Regenbogen
+            +Auf Pixel, Buchstabe, Wort
 
     Text
