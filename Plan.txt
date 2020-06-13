@@ -13,13 +13,17 @@ Optionen:
     Zentriert
     Durchlaufend
         Geschwindigkeit
-        Einlaufend
+        +Einlaufend
+            FillBackground?
+        +Auslaufend
+        WordByWord oder Alles
+            -> WordList
     Wiederholend
 
     Zeiten:
         Anzeigedauer (ggf am Start)
         Pause
-
+   
     Hintergrundfarbe:
         +Schwarz
         +Inverse

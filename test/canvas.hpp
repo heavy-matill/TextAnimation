@@ -3,8 +3,8 @@
 #include "../font_TomThumb.h"
 char canvas[5][15]; 
 uint8_t xWidth = 4;
-std::string text = "Fertig! Klappt jetzt zumindest in der Simulation :) Wie ist die Bahnfahrt so? ;)";
-int8_t xStart = 0;
+std::string text = "Fertig!";
+int8_t xStart = 14; //bScrollIn -> 14, Dont scroll in 0
 uint16_t iStart = 0;
 uint16_t iColor = 1;
 uint16_t iColorTemp = 1;
@@ -12,6 +12,7 @@ uint16_t iColorBg = 0;
 uint16_t stColorScheme = 2; 
 bool bBgInv = true;
 bool bSpacesBg = false;
+bool bScrollOut = false;
 
 void fillCanvas(char c) {
     for(uint8_t i = 0; i<15; i++) {
@@ -98,7 +99,7 @@ void drawChar(int8_t x, char c, int8_t color, uint8_t bg) {//, uint16_t y, char 
     }*/
 }
 
-void drawText() {
+bool drawText() {
     fillCanvas(colorASCII(0));
     iColorTemp = iColor;
     for (uint8_t i = iStart; i<text.length() && (i-iStart)*xWidth+xStart<15; i++) {
@@ -129,13 +130,14 @@ void drawText() {
         }
         // select background color
         if (bBgInv && bSpacesBg || text[i] != ' ') {
-            iColorBg = (iColor-1+2)%4+2;
+            iColorBg = (iColor-1+2)%4+1;
         } else {
             iColorBg = 0;
         } 
         drawChar((i-iStart)*xWidth+xStart,text[i],iColor,iColorBg);
     }
     iColor = iColorTemp;
+    return iStart>=text.length() -4*!bScrollOut;
 }
 
 void shiftText() {
@@ -171,9 +173,9 @@ void shiftBy(uint8_t x) {
     }
 }
 
-void animate() {
+bool animate() {
     shiftText();
-    drawText();
+    return drawText();
     /*shift();
     if(iStart<text.length()) {
         xStart--;

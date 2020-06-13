@@ -11,11 +11,12 @@ int main()
     drawText();
     printCanvas();
     getchar();
-    for(uint8_t i = 0; i<500; i++) {
-        animate();
+    while(!animate()) {
         printCanvas();
         //getchar();
         usleep(100000);
     }
+    printCanvas();
+    getchar();
     return 0;
 }
