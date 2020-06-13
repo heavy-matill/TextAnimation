@@ -6,6 +6,10 @@ uint8_t xWidth = 4;
 std::string text = "Fertig! Klappt jetzt zumindest in der Simulation :) Wie ist die Bahnfahrt so? ;)";
 int8_t xStart = 0;
 uint16_t iStart = 0;
+uint16_t iColor = 1;
+uint16_t iColorTemp = 1;
+bool bColorEachChar = false;
+bool bColorEachWord = true;
 
 void fillCanvas(char c) {
     for(uint8_t i = 0; i<15; i++) {
@@ -24,7 +28,7 @@ void printCanvas() {
             std::cout<<canvas[j][i];
         }
         std::cout<<"|\n";
-    }
+    } 
     for(uint8_t i = 0; i<=xStart; i++) 
         std::cout<<" ";
     std::cout<<"i xStart = -";
@@ -35,6 +39,8 @@ void printCanvas() {
         std::cout<<" ";
     std::cout<<"i iStart = ";
     std::cout<<iStart;
+    std::cout<<"\n iColorTemp = ";
+    std::cout<<iColorTemp;
 }   
 
 char colorASCII(uint8_t i) {
@@ -92,11 +98,26 @@ void drawChar(int8_t x, char c, int8_t color, uint8_t bg) {//, uint16_t y, char 
 
 void drawText() {
     fillCanvas(colorASCII(0));
-
+    iColorTemp = iColor;
     for (uint8_t i = iStart; i<text.length() && (i-iStart)*xWidth+xStart<15; i++) {
-                 
-        drawChar((i-iStart)*xWidth+xStart,text[i],1,0);
+        if (bColorEachChar) {
+            iColor = i%4+1;
+            // get Color from list or shift hue
+        } else {
+            if (bColorEachWord) {
+                if (text[i] == ' ') { 
+                    if ((i-iStart)*xWidth+xStart >= 0) {                                             
+                        iColor = iColor%4+1;
+                    }
+                    if ((i-iStart)*xWidth+xStart == 0) {
+                        iColorTemp = iColor;
+                    }
+                }
+            }
+        }                 
+        drawChar((i-iStart)*xWidth+xStart,text[i],iColor,0);
     }
+    iColor = iColorTemp;
 }
 
 void shiftText() {
